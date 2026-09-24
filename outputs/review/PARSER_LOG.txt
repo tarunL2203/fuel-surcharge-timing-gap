@@ -1,0 +1,13 @@
+'CREATE ROLE IF NOT EXISTS FUEL_ANALYST' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'GRANT ROLE FUEL_ANALYST TO ROLE SYSADMIN' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'CREATE RESOURCE MONITOR IF NOT EXISTS FUEL_RM WITH CREDIT_QUOTA = 5
+ FREQUENCY = MONTHLY START_TIMES' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'ALTER WAREHOUSE FUEL_WH SET RESOURCE_MONITOR = FUEL_RM' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'GRANT OWNERSHIP ON DATABASE FUEL_TIMING TO ROLE FUEL_ANALYST COPY CURRENT GRANTS' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'CREATE OR REPLACE TASK RAW.TASK_LOAD_DIESEL_WEEKLY WAREHOUSE=FUEL_WH
+ SCHEDULE='USING CRON 0 12 * * ' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'ALTER TASK RAW.TASK_LOAD_DIESEL_WEEKLY SUSPEND' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'ALTER TASK IF EXISTS FUEL_TIMING.RAW.TASK_LOAD_DIESEL_WEEKLY SUSPEND' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'DROP TASK IF EXISTS FUEL_TIMING.RAW.TASK_LOAD_DIESEL_WEEKLY' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'DROP RESOURCE MONITOR IF EXISTS FUEL_RM' contains unsupported syntax. Falling back to parsing as a 'Command'.
+'DROP ROLE IF EXISTS FUEL_ANALYST' contains unsupported syntax. Falling back to parsing as a 'Command'.

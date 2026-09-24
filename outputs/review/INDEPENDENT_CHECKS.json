@@ -1,0 +1,523 @@
+{
+  "decoys": "{('CRUDE_OIL_SPOT_WEEKLY', 'USD per barrel', 'US'): 260, ('DIESEL_ULSD_SPOT_WEEKLY', 'USD per gallon', 'US'): 260, ('GASOLINE_RETAIL_REGULAR_WEEKLY', 'USD per gallon', 'US'): 260}",
+  "load_events": [
+    [
+      1,
+      "PASSED_WITH_QUARANTINE",
+      14163,
+      0,
+      2,
+      44,
+      14163,
+      16,
+      "STALE"
+    ],
+    [
+      2,
+      "PASSED",
+      11,
+      0,
+      0,
+      0,
+      14174,
+      9,
+      "FRESH"
+    ],
+    [
+      3,
+      "PASSED",
+      0,
+      0,
+      0,
+      0,
+      14174,
+      9,
+      "FRESH"
+    ],
+    [
+      4,
+      "BLOCKED",
+      0,
+      0,
+      11,
+      0,
+      14174,
+      9,
+      "FRESH"
+    ]
+  ],
+  "INV05_max_error": 1.936228954946273e-13,
+  "E1_max_error": 0.002937369813729107,
+  "E2_confusion": {
+    "FALLING": {
+      "FALLING": 70,
+      "RISING": 0
+    },
+    "PLATEAU": {
+      "FALLING": 4,
+      "RISING": 5
+    },
+    "RISING": {
+      "FALLING": 4,
+      "RISING": 73
+    }
+  },
+  "E2_shares": {
+    "FALLING": 0.8974358974358975,
+    "RISING": 0.9358974358974359
+  },
+  "E3_max_error": 0.0005496592941657968,
+  "memo_recomputed": {
+    "S1": {
+      "mean_dollars": 0.0,
+      "squeeze_share": 0.0
+    },
+    "S2": {
+      "mean_dollars": 4984.350547730829,
+      "squeeze_share": 0.0
+    },
+    "S3": {
+      "mean_dollars": 13.432446531037392,
+      "squeeze_share": 0.3732394366197183
+    },
+    "S4": {
+      "mean_dollars": 4997.782994261866,
+      "squeeze_share": 0.16588419405320814
+    },
+    "S5": {
+      "mean_dollars": 67.55346896191791,
+      "squeeze_share": 0.44209702660406885
+    },
+    "S6": {
+      "mean_dollars": 5051.904016692747,
+      "squeeze_share": 0.20657276995305165
+    }
+  },
+  "changed_output_hashes": [
+    {
+      "path": "outputs/phase_2/SYNTHETIC_load_log.csv",
+      "hash_match": false,
+      "excluded_metadata": "loaded_at",
+      "values_match": true
+    },
+    {
+      "path": "outputs/phase_6/REPORT.md",
+      "hash_match": false
+    }
+  ],
+  "snowflake_parse": [
+    {
+      "file": "00_setup.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 5
+    },
+    {
+      "file": "01_profiling.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "02_landing.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 2
+    },
+    {
+      "file": "03_seeds.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "04_dynamic_tables.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "04b_quality_views.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "05_validation.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "08_business_analysis.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 0
+    },
+    {
+      "file": "99_teardown.sql",
+      "parsed": true,
+      "unsupported_command_nodes": 4
+    }
+  ],
+  "broken_relative_links": [],
+  "checks": [
+    {
+      "check": "listing rows",
+      "actual": 14947,
+      "expected": 14947,
+      "passed": true
+    },
+    {
+      "check": "weeks",
+      "actual": 1288,
+      "expected": 1288,
+      "passed": true
+    },
+    {
+      "check": "regions",
+      "actual": [
+        "CA",
+        "PADD1",
+        "PADD1A",
+        "PADD1B",
+        "PADD1C",
+        "PADD2",
+        "PADD3",
+        "PADD4",
+        "PADD5",
+        "PADD5XCA",
+        "US"
+      ],
+      "expected": [
+        "CA",
+        "PADD1",
+        "PADD1A",
+        "PADD1B",
+        "PADD1C",
+        "PADD2",
+        "PADD3",
+        "PADD4",
+        "PADD5",
+        "PADD5XCA",
+        "US"
+      ],
+      "passed": true
+    },
+    {
+      "check": "diesel distinct pairs",
+      "actual": 14165,
+      "expected": 14165,
+      "passed": true
+    },
+    {
+      "check": "T1",
+      "actual": [
+        [
+          "PADD4",
+          "2011-03-07"
+        ],
+        [
+          "PADD4",
+          "2011-03-14"
+        ],
+        [
+          "PADD4",
+          "2011-03-21"
+        ]
+      ],
+      "expected": [
+        [
+          "PADD4",
+          "2011-03-07"
+        ],
+        [
+          "PADD4",
+          "2011-03-14"
+        ],
+        [
+          "PADD4",
+          "2011-03-21"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "check": "T2",
+      "actual": [
+        "2019-06-03",
+        "2019-06-10"
+      ],
+      "expected": [
+        "2019-06-03",
+        "2019-06-10"
+      ],
+      "passed": true
+    },
+    {
+      "check": "T3",
+      "actual": [
+        [
+          "PADD3",
+          "2016-02-08"
+        ]
+      ],
+      "expected": [
+        [
+          "PADD3",
+          "2016-02-08"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "check": "T4",
+      "actual": [
+        [
+          "PADD2",
+          "2014-11-10"
+        ]
+      ],
+      "expected": [
+        [
+          "PADD2",
+          "2014-11-10"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "check": "T5",
+      "actual": 44,
+      "expected": 44,
+      "passed": true
+    },
+    {
+      "check": "T5 locations",
+      "actual": [
+        "2015-05-25",
+        "2016-05-30",
+        "2020-05-25",
+        "2023-05-29"
+      ],
+      "expected": [
+        "2015-05-25",
+        "2016-05-30",
+        "2020-05-25",
+        "2023-05-29"
+      ],
+      "passed": true
+    },
+    {
+      "check": "T6 rows",
+      "actual": 780,
+      "expected": 780,
+      "passed": true
+    },
+    {
+      "check": "T7",
+      "actual": [
+        "US"
+      ],
+      "expected": [
+        "US"
+      ],
+      "passed": true
+    },
+    {
+      "check": "T8",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "check": "synthetic names",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "check": "load states",
+      "actual": [
+        [
+          "PASSED_WITH_QUARANTINE",
+          14163,
+          16,
+          "STALE"
+        ],
+        [
+          "PASSED",
+          14174,
+          9,
+          "FRESH"
+        ],
+        [
+          "PASSED",
+          14174,
+          9,
+          "FRESH"
+        ],
+        [
+          "BLOCKED",
+          14174,
+          9,
+          "FRESH"
+        ]
+      ],
+      "expected": [
+        [
+          "PASSED_WITH_QUARANTINE",
+          14163,
+          16,
+          "STALE"
+        ],
+        [
+          "PASSED",
+          14174,
+          9,
+          "FRESH"
+        ],
+        [
+          "PASSED",
+          14174,
+          9,
+          "FRESH"
+        ],
+        [
+          "BLOCKED",
+          14174,
+          9,
+          "FRESH"
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "check": "rerun delta",
+      "actual": [
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "check": "blocked invalid",
+      "actual": 11,
+      "expected": 11,
+      "passed": true
+    },
+    {
+      "check": "quarantine",
+      "actual": [
+        [
+          "NULL_VALUE",
+          1
+        ],
+        [
+          "OUT_OF_RANGE",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "NULL_VALUE",
+          1
+        ],
+        [
+          "OUT_OF_RANGE",
+          1
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "check": "normalizations",
+      "actual": 44,
+      "expected": 44,
+      "passed": true
+    },
+    {
+      "check": "scenario rows",
+      "actual": 85044,
+      "expected": 85044,
+      "passed": true
+    },
+    {
+      "check": "INV-01",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "check": "INV-02",
+      "actual": 85044,
+      "expected": 85044,
+      "passed": true
+    },
+    {
+      "check": "INV-03",
+      "actual": [
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "check": "INV-04 / E4",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "check": "INV-05",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "check": "E1",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "check": "E2",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "check": "E3",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "check": "reset substitution",
+      "actual": [
+        {
+          "geo_id": "PADD4",
+          "reset_frequency": "MONTHLY",
+          "reset_period": "2011-03-01",
+          "reset_week": "2011-03-28"
+        }
+      ],
+      "expected": [
+        {
+          "geo_id": "PADD4",
+          "reset_frequency": "MONTHLY",
+          "reset_period": "2011-03-01",
+          "reset_week": "2011-03-28"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "check": "initial missing clean",
+      "actual": 5,
+      "expected": 5,
+      "passed": true
+    }
+  ],
+  "failed_checks": []
+}
