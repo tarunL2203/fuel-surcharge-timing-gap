@@ -30,10 +30,10 @@ Learnings:
 - Analytical: Decoys test source selection.
 - Business: National-only data can still support the mechanism.
 
-Explain-back:
+Understanding the results:
 
-1. What does this phase establish? All eight traps matched expected values. Six synthetic profiling answers are recorded in docs/SYNTHETIC_profile_checklist.md. The real-source gate is NOT RUN.
-2. What does it not establish? Actual company margins or untested Snowflake behavior.
+1. What do these results show? All eight traps matched expected values. Six synthetic profiling answers are recorded in docs/SYNTHETIC_profile_checklist.md. The real-source gate is NOT RUN.
+2. What remains unverified? Actual company margins or untested Snowflake behavior.
 3. Why does it matter? National-only data can still support the mechanism.
 
 Exit criteria: local synthetic evidence is complete with documented scope gaps in docs/acceptance_status.md. Deployment and real-source criteria remain unverified. Publication is confirmed by GitHub PR links, not simulated pushes.

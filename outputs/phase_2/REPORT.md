@@ -26,10 +26,10 @@ Learnings:
 - Analytical: Repeatability includes no-op reruns.
 - Business: Block a bad batch before pricing analysis.
 
-Explain-back:
+Understanding the results:
 
-1. What does this phase establish? Initial 14,163 accepted rows; incremental 14,174; repeat unchanged; corrupt week blocked. 44 normalized dates, 2 initial quarantines and 5 missing clean pairs.
-2. What does it not establish? Actual company margins or untested Snowflake behavior.
+1. What do these results show? Initial 14,163 accepted rows; incremental 14,174; repeat unchanged; corrupt week blocked. 44 normalized dates, 2 initial quarantines and 5 missing clean pairs.
+2. What remains unverified? Actual company margins or untested Snowflake behavior.
 3. Why does it matter? Block a bad batch before pricing analysis.
 
 Exit criteria: local synthetic evidence is complete with documented scope gaps in docs/acceptance_status.md. Deployment and real-source criteria remain unverified. Publication is confirmed by GitHub PR links, not simulated pushes.

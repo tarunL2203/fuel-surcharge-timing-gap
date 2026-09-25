@@ -12,3 +12,5 @@ Status: local synthetic build executed; phase review and real deployment gates a
 
 - D-08: store the last reviewed source fingerprint set per geographic week. Rejected rows in a partially accepted batch are marked reviewed; an entirely blocked batch is not. Replacing that set allows valid corrections and reversions to be detected. Source-state deletions do not automatically remove accepted price history.
 - D-09: configuration seeds must run before profiling/landing even though their filename is 03_seeds.sql. The README provides dependency order explicitly.
+
+- D-10, owner request September 24, 2026: present explanations for a general reader instead of mentor/interview prompts. Current vision and business context distinguish sourced business facts from model assumptions; docs/business_flow_validation.md records the evidence gaps. These reader-facing explanations intentionally supersede the original brief’s copied vision wording. This is a documentation clarification, not a change to model rules, inputs or acceptance thresholds. The original brief and audit remain historical records.
