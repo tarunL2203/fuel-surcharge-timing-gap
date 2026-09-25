@@ -4,6 +4,14 @@
 
 Freight brokers can pay a weekly carrier fuel surcharge while collecting a monthly or quarterly shipper surcharge. This project isolates that timing gap, validates it against known answers and prepares a Snowflake deployment track.
 
+## Why I chose this problem
+
+I am interested in how a small difference in contract timing can affect a business decision. A diesel-price chart shows how prices moved; a brokerage owner needs to understand what those movements mean for the charges agreed with customers and carriers.
+
+My aim is to explore a practical tool for a small freight brokerage: make the fuel-surcharge difference visible, compare alternative reset schedules, and show when the underlying data is too incomplete or stale to trust. Building the pipeline matters because these questions recur whenever prices or contract terms change. The calculations need to be repeatable and explainable.
+
+The current sample demonstrates that approach with artificial data. A useful business version would need the owner's actual terms and shipment records, reconciled to invoices. Its intended benefit is a clearer contract-review decision; financial savings have not been established.
+
 For the distinction between industry practice and modeled assumptions, read [business-flow validation](docs/business_flow_validation.md). The weekly carrier and monthly/quarterly shipper pairing is a scenario, not a verified description of typical broker contracts.
 
 Start with the [vision](docs/00_vision.md), [decision memo](docs/business_memo.md), [acceptance status](docs/acceptance_status.md) and [industry-readiness checklist](docs/industry_readiness.md).
