@@ -1,0 +1,7 @@
+document,claim,source,row_key,column
+business_memo,weekly zero,outputs/phase_4/SYNTHETIC_same_window_contracts.csv,S1,mean_spread
+business_memo,quarterly squeeze,outputs/phase_4/SYNTHETIC_same_window_contracts.csv,S5,squeeze_share
+business_memo,clause squeeze,outputs/phase_4/SYNTHETIC_same_window_contracts.csv,S6,squeeze_share
+business_memo,mean dollar impact,outputs/phase_4/SYNTHETIC_same_window_contracts.csv,S5,mean_dollars_per_1000_loads
+simulated_narration,all figures,outputs/phase_4/SYNTHETIC_same_window_contracts.csv,S1 S5 S6,mean_spread squeeze_share
+linkedin_method_post,no numeric findings,not applicable,not applicable,not applicable
