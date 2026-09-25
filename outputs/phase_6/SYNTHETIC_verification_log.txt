@@ -1,0 +1,66 @@
+SYNTHETIC verification evidence
+
+$ python local/run_pipeline.py all
+Generated SYNTHETIC listing: 14947 rows
+ load_id                 status  inserted  updated  quarantined  raw_rows freshness
+       1 PASSED_WITH_QUARANTINE     14163        0            2     14163     STALE
+       2                 PASSED        11        0            0     14174     FRESH
+       3                 PASSED         0        0            0     14174     FRESH
+       4                BLOCKED         0        0           11     14174     FRESH
+All invariants passed; elapsed seconds 10.3
+
+$ python local/verify_outputs.py
+8/8 traps verified; final spread rows 85044; generation window evidence exported.
+
+$ python local/run_pipeline.py all
+Generated SYNTHETIC listing: 14947 rows
+ load_id                 status  inserted  updated  quarantined  raw_rows freshness
+       1 PASSED_WITH_QUARANTINE     14163        0            2     14163     STALE
+       2                 PASSED        11        0            0     14174     FRESH
+       3                 PASSED         0        0            0     14174     FRESH
+       4                BLOCKED         0        0           11     14174     FRESH
+All invariants passed; elapsed seconds 10.15
+
+$ python local/verify_outputs.py
+8/8 traps verified; final spread rows 85044; generation window evidence exported.
+
+PASS: input and analytical CSV hashes identical on two independent rebuilds.
+$ python local/test_pipeline.py
+test_conflicting_duplicates_both_quarantined (__main__.LandingTests.test_conflicting_duplicates_both_quarantined) ... ok
+test_empty_schema_and_units_block (__main__.LandingTests.test_empty_schema_and_units_block) ... ok
+test_floor_and_missing_reset (__main__.LandingTests.test_floor_and_missing_reset) ... ok
+test_four_week_regime_does_not_bridge_gap (__main__.LandingTests.test_four_week_regime_does_not_bridge_gap) ... ok
+test_index_lag_uses_calendar_week (__main__.LandingTests.test_index_lag_uses_calendar_week) ... ok
+test_invalid_correction_preserves_history (__main__.LandingTests.test_invalid_correction_preserves_history) ... ok
+test_malformed_cast_blocks_without_mutation (__main__.LandingTests.test_malformed_cast_blocks_without_mutation) ... ok
+test_valid_correction_and_reversion (__main__.LandingTests.test_valid_correction_and_reversion) ... ok
+test_whole_missing_month_is_logged (__main__.LandingTests.test_whole_missing_month_is_logged) ... ok
+test_snowflake_roundtrip_same_results (__main__.ModelParityTests.test_snowflake_roundtrip_same_results) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.854s
+
+OK
+
+$ python local/test_app.py
+2026-09-24 00:38:46.926 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-09-24 00:38:48.130 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-09-24 00:38:48.556 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-09-24 00:38:48.946 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-09-24 00:38:49.249 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Overview PASS
+Scenario explorer PASS
+Data quality PASS
+Assumptions PASS
+PADD4 quarterly seasonal clause PASS
+
+$ python local/render_page_views.py
+
+$ python local/run_pipeline.py teardown
+Local database removed (idempotent).
+
+$ python local/run_pipeline.py teardown
+Local database removed (idempotent).
+
+PASS: local teardown runs twice; verified database restored for app use.
+$ python local/write_reports.py
