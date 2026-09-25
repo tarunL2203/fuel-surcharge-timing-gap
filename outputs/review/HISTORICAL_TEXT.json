@@ -1,0 +1,19 @@
+[
+  {
+    "sha": "91e354ecef4efffdcb1a940d92c76552dc025484",
+    "path": "README.md",
+    "size": 284,
+    "content": "# The Broker’s Two Clocks\n\nSYNTHETIC build in phase review. Start with docs/00_vision.md and docs/BUILD_BRIEF.md. See docs/DECISIONS.md for approved clarifications.\n\nAll changes use phase-N pull requests. No direct pushes to main. The complete runnable snapshot will be on phase-6.\n"
+  },
+  {
+    "sha": "5497520288a3695c7a5263dcfb70d9b9baa6c622",
+    "path": "README.md",
+    "size": 145,
+    "content": "# fuel-surcharge-timing-gap\nThe Broker’s Two Clocks: validated synthetic fuel surcharge timing-gap analysis with a Snowflake deployment track.\n"
+  },
+  {
+    "path": "docs/connection_test.md",
+    "sha": "174e42dfc7af32a094471eb3682ce60b4cfbf4d8",
+    "content": "Codex connection works\n"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "unique_blobs_scanned": 111,
+  "missing_blobs": [],
+  "hash_mismatches": [],
+  "pattern_hits": [],
+  "largest_blob_bytes": 1708583,
+  "large_files": [],
+  "changed_paths": {
+    "README.md": [
+      "5497520288a3695c7a5263dcfb70d9b9baa6c622",
+      "90908e8587826a816c943651eaf3cc6f47f4e61f",
+      "91e354ecef4efffdcb1a940d92c76552dc025484"
+    ]
+  },
+  "stray_paths": []
+}

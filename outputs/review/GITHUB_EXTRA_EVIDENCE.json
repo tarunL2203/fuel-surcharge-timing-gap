@@ -1,0 +1,67 @@
+{
+  "tag_refs": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#get-all-references-in-a-namespace\",\"status\":\"404\"}"
+        }
+      ],
+      "structuredContent": {
+        "error": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#get-all-references-in-a-namespace\",\"status\":\"404\"}",
+        "error_code": "NOT_FOUND",
+        "error_data": {
+          "message": "Not Found",
+          "documentation_url": "https://docs.github.com/rest/git/refs#get-all-references-in-a-namespace",
+          "status": "404"
+        }
+      },
+      "isError": true
+    }
+  },
+  "connection_file": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "content": "Codex connection works\n",
+        "encoding": "utf-8",
+        "sha": "174e42dfc7af32a094471eb3682ce60b4cfbf4d8",
+        "display_url": "https://github.com/tarunL2203/fuel-surcharge-timing-gap/blob/connection-test/docs/connection_test.md",
+        "display_title": "connection_test.md"
+      },
+      "isError": false
+    }
+  },
+  "connection_tree": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "content": "{\"sha\":\"288e542c0fbedd1d7f1d228f341028ad000d2d2d\",\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/288e542c0fbedd1d7f1d228f341028ad000d2d2d\",\"tree\":[{\"path\":\"README.md\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"5497520288a3695c7a5263dcfb70d9b9baa6c622\",\"size\":145,\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/blobs/5497520288a3695c7a5263dcfb70d9b9baa6c622\"},{\"path\":\"docs\",\"mode\":\"040000\",\"type\":\"tree\",\"sha\":\"d59de6de3a4760d7033e80183a455cafbfcc3768\",\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/d59de6de3a4760d7033e80183a455cafbfcc3768\"},{\"path\":\"docs/connection_test.md\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"174e42dfc7af32a094471eb3682ce60b4cfbf4d8\",\"size\":23,\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/blobs/174e42dfc7af32a094471eb3682ce60b4cfbf4d8\"}],\"truncated\":false}",
+        "title": "288e542c0fbedd1d7f1d228f341028ad000d2d2d",
+        "modified_date": null,
+        "url": "https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/288e542c0fbedd1d7f1d228f341028ad000d2d2d?recursive=1",
+        "display_url": "https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/288e542c0fbedd1d7f1d228f341028ad000d2d2d?recursive=1",
+        "display_title": "288e542c0fbedd1d7f1d228f341028ad000d2d2d",
+        "structuredContent": {
+          "title": "288e542c0fbedd1d7f1d228f341028ad000d2d2d",
+          "content": "{\"sha\":\"288e542c0fbedd1d7f1d228f341028ad000d2d2d\",\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/288e542c0fbedd1d7f1d228f341028ad000d2d2d\",\"tree\":[{\"path\":\"README.md\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"5497520288a3695c7a5263dcfb70d9b9baa6c622\",\"size\":145,\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/blobs/5497520288a3695c7a5263dcfb70d9b9baa6c622\"},{\"path\":\"docs\",\"mode\":\"040000\",\"type\":\"tree\",\"sha\":\"d59de6de3a4760d7033e80183a455cafbfcc3768\",\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/d59de6de3a4760d7033e80183a455cafbfcc3768\"},{\"path\":\"docs/connection_test.md\",\"mode\":\"100644\",\"type\":\"blob\",\"sha\":\"174e42dfc7af32a094471eb3682ce60b4cfbf4d8\",\"size\":23,\"url\":\"https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/blobs/174e42dfc7af32a094471eb3682ce60b4cfbf4d8\"}],\"truncated\":false}",
+          "display_url": "https://api.github.com/repos/tarunL2203/fuel-surcharge-timing-gap/git/trees/288e542c0fbedd1d7f1d228f341028ad000d2d2d?recursive=1"
+        }
+      },
+      "isError": false
+    }
+  }
+}
