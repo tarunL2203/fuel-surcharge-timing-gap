@@ -1,0 +1,9 @@
+trap,expected,actual,passed
+T1,3,3,True
+T2,2,2,True
+T3,1,1,True
+T4,1,1,True
+T5,44,44,True
+T6,3,3,True
+T7,10,10,True
+T8,16,16,True

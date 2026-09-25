@@ -1,0 +1,12 @@
+geo_id,variable,variable_name,date,value,unit
+US,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,256.9,USD per gallon
+PADD1,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,261.3,USD per gallon
+PADD1A,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,266.40000000000003,USD per gallon
+PADD1B,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,263.8,USD per gallon
+PADD1C,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,258.40000000000003,USD per gallon
+PADD2,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,256.9,USD per gallon
+PADD3,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,247.7,USD per gallon
+PADD4,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,262.1,USD per gallon
+PADD5,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,283.8,USD per gallon
+PADD5XCA,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,273.5,USD per gallon
+CA,DIESEL_RETAIL_ONHWY_WEEKLY,Weekly retail on-highway diesel price (SYNTHETIC),2026-09-21,296.7,USD per gallon
