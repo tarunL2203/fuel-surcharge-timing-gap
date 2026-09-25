@@ -40,10 +40,10 @@ Learnings:
 - Analytical: Shared lags preserve the control.
 - Business: Different schedules create exposure.
 
-Explain-back:
+Understanding the results:
 
-1. What does this phase establish? 85,044 scenario rows. The planted PADD4 March 2011 monthly reset moves to March 28; other reset periods have no substitutions.
-2. What does it not establish? Actual company margins or untested Snowflake behavior.
+1. What do these results show? 85,044 scenario rows. The planted PADD4 March 2011 monthly reset moves to March 28; other reset periods have no substitutions.
+2. What remains unverified? Actual company margins or untested Snowflake behavior.
 3. Why does it matter? Different schedules create exposure.
 
 Exit criteria: local synthetic evidence is complete with documented scope gaps in docs/acceptance_status.md. Deployment and real-source criteria remain unverified. Publication is confirmed by GitHub PR links, not simulated pushes.

@@ -1,29 +1,33 @@
-# Vision (mentor version)
+# The broker's two clocks
 
-**The pitch**
+**SYNTHETIC DRY RUN. Real contract behavior and Snowflake execution remain unverified.**
 
-Freight brokers sit between shippers and carriers. They pay carriers a fuel surcharge that resets every week with the government's diesel price index, but they bill shippers under contract terms that reset monthly, quarterly, or not at all. When diesel moves, the two clocks drift apart and the difference lands on the broker's margin, even though the broker never buys a gallon of fuel. This project measures that gap on real EIA diesel data inside Snowflake: how large it gets under different contract terms, when it is worst (rising prices, the winter heating season), and whether a contract clause closes it. The deliverable is a Streamlit app where a pricing team can change contract terms and see the margin impact, plus a one-page memo that leads with the decision.
+A freight broker arranges transport between a shipper with goods to move and a carrier that moves them. This project asks what happens to the fuel-surcharge component when the broker's customer charges and carrier charges follow different update schedules.
 
-**Why it is credible**
+The sample holds the formula and other terms constant, then compares weekly, monthly and quarterly resets. These are modeled contract scenarios, not a claim that every broker uses these terms. The resulting spread is the surcharge billed to the shipper minus the surcharge payable to the carrier. It is not total profit or a measure of cash received.
 
-- **Real, free data**: EIA weekly retail diesel prices from the Snowflake Marketplace, with data limits stated upfront.
-- **A built-in correctness proof**: when both clocks reset weekly, the model must show zero spread in every week. Any spread in the other scenarios comes from the mechanism, not a bug.
-- **Method tested before the real run**: a synthetic dry run plants eight known data errors (the checks must catch all of them) and known effects (the analysis must recover them).
-- **Every assumption is labeled, registered, and stress-tested.**
+Start with [how the business process relates to the model](01_business_context.md), [the evidence behind the assumptions](business_flow_validation.md), or [the synthetic decision memo](business_memo.md).
 
-**What it does not claim**
+## What can this project tell us?
 
-- No real company's margins or surcharge collections (that data is private).
-- No forecasting.
-- Synthetic results show the method works. Only the real run produces findings.
+It demonstrates how a timing difference can change a modeled surcharge spread, checks the calculations against known answers and provides charts and an app for exploring the assumptions. Artificial prices, planted data problems and known effects let us test the method before introducing real data.
 
-**Why Snowflake, when the data is small**
+## How do we check the calculations?
 
-The real diesel slice is expected to be under about 20,000 rows, so the case is not volume. The case is that the data arrives live through the Marketplace with no pipeline to maintain, every weekly load is validated before it touches the model, the rebuild is declarative, and the app sits next to the data, so a pricing analyst can test contract terms without exporting anything.
+When both sides use identical formulas, indexes, lags and weekly resets, the spread should be zero. This is one useful control, not proof that all code or business assumptions are correct. Other checks cover data quality, repeated loads, known effects and reconciliation between detail and summaries.
 
-**Questions a mentor will ask**
+## Does this describe actual brokerage contracts?
 
-- *Is the surcharge schedule real?* The formula structure is public and cited. The parameter values are labeled assumptions with sensitivity ranges.
-- *What if the listing has no regional data?* The core mechanism runs on the national index. Regional analysis is a scope option decided in Phase 1.
-- *How do you know the model is right?* The zero-spread control, known-answer tests on synthetic data, and reconciliation checks on every run.
-- *What would an owner-operator version change?* Same data, different exposure: an owner-operator buys the fuel, so the question becomes whether the surcharge received covers the fuel burned. That is the planned second lens.
+Only at the level of a business hypothesis. We have checked public sources for the parties' roles and the existence of differing fuel-pricing arrangements. We have not inspected paired shipper/carrier contracts, reconciled invoices or interviewed a brokerage operator. Quarterly resets and the seasonal clause remain illustrative scenarios. The [validation record](business_flow_validation.md) distinguishes supported facts from assumptions.
+
+## What would make the results useful for a real decision?
+
+A real application needs actual contract terms, shipment dates and miles, invoice records, and a business reviewer who can confirm how charges are applied. Replacing artificial diesel prices with real prices alone would still produce a scenario analysis, not verified company margins.
+
+## Why include Snowflake?
+
+The intended deployment explores managed data processing, repeatable checks and an app alongside the data. The current demonstration runs locally. Marketplace availability, access, refresh behavior, costs and Snowflake execution must be verified before describing those as delivered capabilities.
+
+## What if only national diesel prices are available?
+
+The timing example can use a national index. Regional comparisons depend on actual source coverage and contract relevance. The sample's regions do not establish that a future listing contains the same coverage.

@@ -4,6 +4,8 @@
 
 Freight brokers can pay a weekly carrier fuel surcharge while collecting a monthly or quarterly shipper surcharge. This project isolates that timing gap, validates it against known answers and prepares a Snowflake deployment track.
 
+For the distinction between industry practice and modeled assumptions, read [business-flow validation](docs/business_flow_validation.md). The weekly carrier and monthly/quarterly shipper pairing is a scenario, not a verified description of typical broker contracts.
+
 Start with the [vision](docs/00_vision.md), [decision memo](docs/business_memo.md), [acceptance status](docs/acceptance_status.md) and [industry-readiness checklist](docs/industry_readiness.md).
 
 ## Run the full sample

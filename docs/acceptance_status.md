@@ -6,6 +6,8 @@ Completed: expected sample counts, all eight traps, five invariants, planted-eff
 
 Remaining before full brief sign-off:
 
+- Validate the assumed customer/carrier contract pairing with a practitioner and matched contract/invoice records. Public sources support the general mechanism, not our specific weekly-versus-monthly/quarterly pairing. See [business-flow validation](business_flow_validation.md).
+
 - Execute and review Snowflake setup, landing transactions, dynamic-table refresh, task scheduling, app deployment and two teardown runs. Local checks cannot certify these.
 - Verify a public formula-style surcharge schedule. Parameters remain ILLUSTRATIVE and sources.md retains TODO(source).
 - Pass the actual Marketplace source gate and observe four real weekly task runs. No listing or real company data has been accessed.

@@ -28,10 +28,10 @@ Learnings:
 - Analytical: The zero control proves the baseline.
 - Business: Exposure is created in contracting.
 
-Explain-back:
+Understanding the results:
 
-1. What does this phase establish? Named checks map to all BR/FR/NFR IDs in docs/traceability.md. The six-week example is computed in SQL.
-2. What does it not establish? Actual company margins or untested Snowflake behavior.
+1. What do these results show? Named checks map to all BR/FR/NFR IDs in docs/traceability.md. The six-week example is computed in SQL.
+2. What remains unverified? Actual company margins or untested Snowflake behavior.
 3. Why does it matter? Exposure is created in contracting.
 
 Exit criteria: local synthetic evidence is complete with documented scope gaps in docs/acceptance_status.md. Deployment and real-source criteria remain unverified. Publication is confirmed by GitHub PR links, not simulated pushes.

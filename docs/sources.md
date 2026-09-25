@@ -11,3 +11,7 @@ Checked 2026-09-24. No source establishes an individual broker's margins.
 - Trial/Cortex availability: TODO(account verification). Optional AI features are excluded from the core build.
 
 The original brief contains stronger assumptions about trial access and Marketplace availability. Treat those as unverified until checked in the actual account.
+
+## Business-process evidence
+
+The [business-flow validation record](business_flow_validation.md) documents a September 24, 2026 public-source check of FMCSA roles, EIA surcharge guidance and C.H. Robinson contract-pricing commentary. It distinguishes sourced facts from scenario assumptions and lists the contract/invoice evidence still required. Public-source review does not validate a particular broker’s contracts.
