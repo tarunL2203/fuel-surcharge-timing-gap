@@ -19,6 +19,13 @@ Sample results:
 
 Validation: Named checks map to all BR/FR/NFR IDs in docs/traceability.md. The six-week example is computed in SQL.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Six-week worked example | Six displayed weeks, nonnegative carrier surcharge | Six rows; carrier surcharge floors at zero | PASS |
+| Identical initial reset | Zero first-week spread | 0.000000 | PASS |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: The owner approved passing unchanged reruns, resolving the BR-17 conflict.
 
 Learnings:

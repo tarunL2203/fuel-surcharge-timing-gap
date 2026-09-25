@@ -14,3 +14,5 @@ Status: local synthetic build executed; phase review and real deployment gates a
 - D-09: configuration seeds must run before profiling/landing even though their filename is 03_seeds.sql. The README provides dependency order explicitly.
 
 - D-10, owner request September 24, 2026: present explanations for a general reader instead of mentor/interview prompts. Current vision and business context distinguish sourced business facts from model assumptions; docs/business_flow_validation.md records the evidence gaps. These reader-facing explanations intentionally supersede the original brief’s copied vision wording. This is a documentation clarification, not a change to model rules, inputs or acceptance thresholds. The original brief and audit remain historical records.
+
+- D-11, September 25, 2026: owner requested necessary GitHub publication steps. The repository was already public when checked. Publish a clearly labeled synthetic preview through PR merges, preserving the original audit and open acceptance gaps. This is not final-release or production sign-off. No direct main push.

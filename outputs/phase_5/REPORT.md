@@ -19,6 +19,14 @@ Sample results:
 
 Validation: All four app pages and a PADD4 quarterly/clause selection passed AppTest. Prose numbers trace to SQL result rows. Snowflake app NOT RUN.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Local app pages | Four pages without test exceptions | Four pages pass AppTest | PASS |
+| Alternate selection | PADD4 quarterly with clause works | AppTest passes | PASS |
+| Snowflake app | Deployment evidence | Not executed | UNVERIFIED |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: App tests revealed a Streamlit width deprecation; the argument was updated.
 
 Learnings:
