@@ -21,6 +21,13 @@ Sample results:
 
 Validation: All eight traps matched expected values. Six synthetic profiling answers are recorded in docs/SYNTHETIC_profile_checklist.md. The real-source gate is NOT RUN.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Source records | 14,947 | 14,947 | PASS |
+| Planted traps | T1 through T8 detected | 8 of 8 | PASS |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: DuckDB rejected rows as an implicit alias; it was renamed row_count. Expected counts stayed unchanged.
 
 Learnings:

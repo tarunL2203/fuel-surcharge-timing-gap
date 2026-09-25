@@ -17,6 +17,15 @@ Sample results:
 
 Validation: Initial 14,163 accepted rows; incremental 14,174; repeat unchanged; corrupt week blocked. 44 normalized dates, 2 initial quarantines and 5 missing clean pairs.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Initial accepted records | 14,163 | 14,163 | PASS |
+| Accepted after valid update | 14,174 | 14,174 | PASS |
+| Unchanged rerun | 0 inserts, 0 updates | 0 inserts, 0 updates | PASS |
+| Corrupt batch | BLOCKED; accepted count unchanged | BLOCKED; 14,174 | PASS |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: A last-reviewed source-state audit avoids repeatedly treating quarantined history as new. Valid correction/reversion tests passed.
 
 Learnings:

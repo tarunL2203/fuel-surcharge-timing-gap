@@ -19,6 +19,16 @@ Sample results:
 
 Validation: INV-01 through INV-05 pass. E1 and E3 pass all regions. E2 passes both regimes. Exact errors and confusion matrix are saved as CSVs.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| INV-01 through INV-05 | Zero failing rows | Zero failing rows | PASS |
+| E1 maximum error | At most 1 percentage point | 0.29374 percentage points | PASS |
+| E2 rising / falling | At least 70% each | 93.59% / 89.74% | PASS |
+| E3 maximum error | At most 1 percentage point | 0.05497 percentage points | PASS |
+| E4 sign compliance | 100% | 100% | PASS |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: DuckDB rejected weeks and error as implicit aliases; explicit aliases fixed them. Final repeatability checks exposed sensitivity state leaking into baseline outputs. Each sensitivity scenario now runs in a transaction that is rolled back, with assertions that both parameters and weekly rows are unchanged. No source values or expected answers were changed.
 
 Learnings:

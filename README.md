@@ -1,6 +1,8 @@
 # The Broker’s Two Clocks
 
-**SYNTHETIC DRY RUN • Reviewable sample • Snowflake execution unverified**
+**PUBLIC SYNTHETIC PREVIEW • Local demonstration • Snowflake execution unverified**
+
+Ready to explore as a documented sample. Not a production tool or a completed commercial validation. See [current publication status](docs/publication_status.md) for open work. The historical first-person entries in docs/LEARNINGS.md were agent-generated and have not been confirmed as the owner’s personal experience.
 
 Freight brokers can pay a weekly carrier fuel surcharge while collecting a monthly or quarterly shipper surcharge. This project isolates that timing gap, validates it against known answers and prepares a Snowflake deployment track.
 
@@ -18,7 +20,7 @@ Start with the [vision](docs/00_vision.md), [decision memo](docs/business_memo.m
 
 ## Run the full sample
 
-Python 3.11+ is recommended. Run from the repository root on the `phase-6` branch while its PR is open.
+Python 3.11+ is recommended. Run from the repository root after cloning the `main` branch.
 
 ```bash
 python -m venv .venv
@@ -103,10 +105,14 @@ These are test results, not findings about EIA prices or company margins. The co
 
 ## Review workflow
 
-Private repository. No direct pushes to main. Connection test uses `connection-test`; project PRs use `phase-0` through `phase-6`, stacked in that order. Review the [phase file map](docs/phase_file_map.md). The final complete snapshot is on phase-6 while reviews are open. No PR is auto-merged. A release tag is deferred until acceptance review.
+The repository is public. Changes reach main through pull requests, with phase commits retained for review. See the [phase file map](docs/phase_file_map.md), [original audit](outputs/review/AUDIT_SUMMARY.md) and [current publication status](docs/publication_status.md). The audit describes its original snapshot; current status records subsequent fixes and open items. A final release tag is deferred until the remaining acceptance gaps are resolved.
 
 ## Limits and disclosure
 
 All schedule values are illustrative. The regions overlap. Observations are equally weighted, not actual load volumes. The centered seasonal measure uses future data and is descriptive. The sample preserves accepted history on invalid corrections and does not silently propagate provider deletions. Live freshness, contract rules, source terms, cost behavior and operational permissions require real deployment evidence.
 
 The sample build in this repository was generated with AI assistance on synthetic data to test the method end to end. The problem framing, business rules, and validation design are the author's. Findings will come from the real run in Snowflake.
+
+## Author and license
+
+Project owner: Sai Tarun Reddy. Built with AI assistance as disclosed above. Licensed under the [MIT License](LICENSE).

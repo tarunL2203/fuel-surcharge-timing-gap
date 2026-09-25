@@ -31,6 +31,13 @@ Sample results:
 
 Validation: 85,044 scenario rows. The planted PADD4 March 2011 monthly reset moves to March 28; other reset periods have no substitutions.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Six-scenario detail | 85,044 rows | 85,044 rows | PASS |
+| PADD4 March 2011 monthly substitution | March 28 | March 28 | PASS |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: Date joins enforce exact calendar lags and four-week comparisons; missing observations are not filled.
 
 Learnings:

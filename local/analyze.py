@@ -41,12 +41,12 @@ def analyze(c):
  series=c.sql("SELECT week_date,scenario_id,spread FROM model.dt_margin_spread WHERE geo_id='US' AND scenario_id IN ('S1','S3','S5') ORDER BY week_date").df()
  fig,ax=plt.subplots(figsize=(11,4))
  for s,g in series.groupby('scenario_id'):ax.plot(g.week_date,g.spread,label=s,lw=.8)
- ax.axhline(0,color='black',lw=.6);ax.legend();ax.set_ylabel('Dollars per mile');save('SYNTHETIC_spread.png','slower resets create timing exposure | US | 2002-01-07 to 2026-09-14')
+ ax.axhline(0,color='black',lw=.6);ax.legend();ax.set_ylabel('Dollars per mile');save('SYNTHETIC_spread.png','slower resets create timing exposure | US | 2002-01-07 to 2026-09-14 | includes partial current periods')
  h=regime[(regime.geo_id=='US')&(regime.scenario_id=='S5')].pivot(index='regime',columns='season',values='mean_spread')
  fig,ax=plt.subplots(figsize=(7,4));im=ax.imshow(h.values,cmap='RdBu',vmin=-.2,vmax=.2);ax.set_xticks(range(len(h.columns)),h.columns);ax.set_yticks(range(len(h.index)),h.index);fig.colorbar(im,label='Dollars per mile');save('SYNTHETIC_regime_season.png','regime and season averages | S5 US | 2002-01-07 to 2026-06-29')
  x=clause[(clause.geo_id=='US')&(clause.season=='HEATING')];x.plot.bar(x='scenario_id',y=['squeeze_without','squeeze_with'],figsize=(7,4));plt.ylim(bottom=0);plt.ylabel('Mean negative spread magnitude ($/mile)');save('SYNTHETIC_clause.png','clause reduces modeled heating squeeze | US | completed periods through 2026-08')
- seasonal.plot.bar(x='geo_id',y=['planted_amplitude','recovered_amplitude'],figsize=(9,4));plt.ylim(bottom=0);save('SYNTHETIC_recovery.png','planted and recovered January effect | full 52-week windows, 2002–2026')
- regions=pd.read_csv(out/'SYNTHETIC_regions_common_window.csv');regions[regions.scenario_id=='S5'].plot.bar(x='geo_id',y='mean_spread',figsize=(9,4));plt.axhline(0,color='black',lw=.6);save('SYNTHETIC_regions.png','same-week regional exposure comparison | S5 | 2002-01-07 to 2026-06-29')
+ seasonal.plot.bar(x='geo_id',y=['planted_amplitude','recovered_amplitude'],figsize=(9,4));plt.ylim(bottom=0);plt.ylabel('January amplitude (fraction)');save('SYNTHETIC_recovery.png','planted vs recovered January effect | full windows | Jan 2003 to Jan 2026')
+ regions=pd.read_csv(out/'SYNTHETIC_regions_common_window.csv');regions[regions.scenario_id=='S5'].plot.bar(x='geo_id',y='mean_spread',figsize=(9,4));plt.axhline(0,color='black',lw=.6);plt.ylabel('Mean spread ($/mile)');save('SYNTHETIC_regions.png','same-week regional exposure comparison | S5 | 2002-01-07 to 2026-06-29')
  # Known-answer six-week example, computed by SQL.
  export(c,"""WITH v AS (SELECT * FROM (VALUES (DATE '2026-01-05',2.45),(DATE '2026-01-12',2.75),(DATE '2026-01-19',3.05),(DATE '2026-01-26',2.15),(DATE '2026-02-02',1.25),(DATE '2026-02-09',1.10)) t(week_date,price)), f AS (SELECT *,GREATEST(0,(price-1.25)/6) carrier_fsc,GREATEST(0,(FIRST_VALUE(price) OVER(ORDER BY week_date)-1.25)/6) shipper_fsc FROM v) SELECT *,shipper_fsc-carrier_fsc spread FROM f ORDER BY week_date""",'outputs/phase_0/SYNTHETIC_six_week_example.csv')
  # SQL-derived memo rows used verbatim by report writer.

@@ -11,6 +11,14 @@ Sample results:
 See manifest.json and SYNTHETIC_verification_log.txt. Stacked phase pull requests preserve review order.
 Validation: Local checks and two local teardown calls pass. Snowflake execution/teardown and live weekly operation are NOT RUN. Deployment remains gated.
 
+| Check | Expected | Observed | Status |
+|---|---|---|---|
+| Local targeted tests | Ten pass | Ten pass in recorded rerun | PASS |
+| Local teardown | Safe repeated execution | Two calls pass in phase-6 log | PASS |
+| Snowflake deployment / teardown | Executed and reviewed | Not executed | UNVERIFIED |
+
+Table evidence: existing phase CSVs and outputs/review/INDEPENDENT_CHECKS.json; execution evidence is in outputs/review/RERUN_LOG.txt and outputs/phase_6/SYNTHETIC_verification_log.txt.
+
 Surprises and fixes: A report-generation command initially used the wrong working directory and wrote no files; rerunning from the project parent fixed it. GitHub sign-in was required to create the repository.
 
 Learnings:
@@ -30,4 +38,5 @@ Exit criteria: local synthetic evidence is complete with documented scope gaps i
 
 Evidence files:
 
+- `outputs/phase_6/SYNTHETIC_verification_log.txt`
 - `outputs/phase_6/manifest.json`
