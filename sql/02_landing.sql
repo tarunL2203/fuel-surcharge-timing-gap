@@ -1,0 +1,83 @@
+-- UNVERIFIED: confirm in Snowflake. Prerequisites: 00_setup, 03_seeds, real-source gate.
+USE ROLE FUEL_ANALYST; USE DATABASE FUEL_TIMING; USE WAREHOUSE FUEL_WH;
+ALTER SESSION SET WEEK_START=1;
+CREATE TABLE IF NOT EXISTS RAW.DIESEL_WEEKLY(geo_id VARCHAR,week_date DATE,price NUMBER(12,3),loaded_at TIMESTAMP_LTZ,load_id VARCHAR);
+CREATE TABLE IF NOT EXISTS RAW.SOURCE_SEEN(geo_id VARCHAR,week_date DATE,fingerprint VARCHAR);
+CREATE TABLE IF NOT EXISTS RAW.QUARANTINE(load_id VARCHAR,geo_id VARCHAR,week_date DATE,price FLOAT,reason VARCHAR);
+CREATE TABLE IF NOT EXISTS RAW.NORMALIZATIONS(load_id VARCHAR,geo_id VARCHAR,source_date DATE,week_date DATE);
+CREATE TABLE IF NOT EXISTS RAW.LOAD_LOG(load_id VARCHAR,status VARCHAR,inserted INTEGER,updated INTEGER,quarantined INTEGER,normalized INTEGER,raw_rows INTEGER,days_old INTEGER,freshness VARCHAR,reason VARCHAR,loaded_at TIMESTAMP_LTZ);
+CREATE OR REPLACE PROCEDURE RAW.LOAD_DIESEL_WEEKLY()
+RETURNS VARCHAR LANGUAGE SQL EXECUTE AS OWNER AS
+$$
+DECLARE
+ src VARCHAR; variable_id VARCHAR; gate BOOLEAN; lid VARCHAR DEFAULT UUID_STRING();
+ n INTEGER; bad INTEGER; ins INTEGER; upd INTEGER; norm INTEGER;
+ bad_limit FLOAT; lo FLOAT; hi FLOAT; asof DATE; max_age INTEGER;
+ status_text VARCHAR DEFAULT 'PASSED'; reason_text VARCHAR DEFAULT '';
+BEGIN
+ SELECT COUNT(*) INTO :n FROM CONFIG.SOURCE_CONFIG;
+ IF (n<>1) THEN RETURN 'BLOCKED: source configuration must have one row'; END IF;
+ SELECT source_object,diesel_variable,profile_gate_passed INTO :src,:variable_id,:gate FROM CONFIG.SOURCE_CONFIG;
+ IF (src IS NULL OR variable_id IS NULL OR NOT gate) THEN RETURN 'BLOCKED: real-source gate not passed'; END IF;
+ SELECT batch_max_bad_pct,min_price,max_price,as_of_date,freshness_max_days INTO :bad_limit,:lo,:hi,:asof,:max_age FROM CONFIG.PARAMETERS;
+ -- Adapter schema errors go to the exception handler and never modify RAW prices.
+ CREATE OR REPLACE TEMP TABLE STAGED AS
+ SELECT geo_id::VARCHAR geo_id,date::DATE source_date,DATE_TRUNC('week',date)::DATE week_date,
+ value::FLOAT price,unit::VARCHAR unit FROM IDENTIFIER(:src) WHERE variable=:variable_id;
+ SELECT COUNT(*) INTO :n FROM STAGED;
+ IF (n=0) THEN
+  INSERT INTO RAW.LOAD_LOG VALUES(:lid,'BLOCKED',0,0,0,0,(SELECT COUNT(*) FROM RAW.DIESEL_WEEKLY),NULL,NULL,'EMPTY_SOURCE',CURRENT_TIMESTAMP());
+  RETURN 'BLOCKED: empty source';
+ END IF;
+ SELECT COUNT(*) INTO :n FROM STAGED WHERE unit IS NULL OR unit<>'USD per gallon' OR geo_id IS NULL OR source_date IS NULL;
+ IF (n>0) THEN
+  INSERT INTO RAW.LOAD_LOG VALUES(:lid,'BLOCKED',0,0,0,0,(SELECT COUNT(*) FROM RAW.DIESEL_WEEKLY),NULL,NULL,'UNIT_OR_KEY_MISMATCH',CURRENT_TIMESTAMP());
+  RETURN 'BLOCKED: unit or key mismatch';
+ END IF;
+ CREATE OR REPLACE TEMP TABLE FINGERPRINTED AS SELECT DISTINCT *,MD5(geo_id||'|'||source_date::VARCHAR||'|'||COALESCE(price::VARCHAR,'NULL')||'|'||unit) fingerprint FROM STAGED;
+ CREATE OR REPLACE TEMP TABLE CHANGED_KEYS AS SELECT DISTINCT geo_id,week_date FROM FINGERPRINTED WHERE fingerprint NOT IN(SELECT fingerprint FROM RAW.SOURCE_SEEN) UNION SELECT DISTINCT s.geo_id,s.week_date FROM RAW.SOURCE_SEEN s JOIN FINGERPRINTED f USING(geo_id,week_date) WHERE s.fingerprint NOT IN(SELECT fingerprint FROM FINGERPRINTED);
+ CREATE OR REPLACE TEMP TABLE DELTA AS SELECT f.* FROM FINGERPRINTED f JOIN CHANGED_KEYS USING(geo_id,week_date);
+ SELECT COUNT(*) INTO :n FROM DELTA;
+ IF (n=0) THEN
+  INSERT INTO RAW.LOAD_LOG SELECT :lid,'PASSED',0,0,0,0,COUNT(*),DATEDIFF('day',MAX(week_date),:asof),IFF(DATEDIFF('day',MAX(week_date),:asof)>:max_age,'STALE','FRESH'),'NO_CHANGE',CURRENT_TIMESTAMP() FROM RAW.DIESEL_WEEKLY;
+  RETURN 'PASSED: no changes';
+ END IF;
+ CREATE OR REPLACE TEMP TABLE CLASSIFIED AS WITH conflicts AS (
+  SELECT geo_id,week_date,COUNT(DISTINCT COALESCE(price::VARCHAR,'NULL')) variants FROM STAGED GROUP BY geo_id,week_date)
+ SELECT d.*,CASE WHEN variants>1 THEN 'CONFLICTING_DUPLICATE' WHEN price IS NULL THEN 'NULL_VALUE'
+ WHEN price<:lo OR price>:hi OR price='NaN'::FLOAT THEN 'OUT_OF_RANGE' END reason
+ FROM DELTA d JOIN conflicts USING(geo_id,week_date);
+ SELECT COUNT(*) INTO :bad FROM CLASSIFIED WHERE reason IS NOT NULL;
+ IF (bad/n>bad_limit) THEN
+  INSERT INTO RAW.LOAD_LOG SELECT :lid,'BLOCKED',0,0,:bad,0,COUNT(*),DATEDIFF('day',MAX(week_date),:asof),IFF(DATEDIFF('day',MAX(week_date),:asof)>:max_age,'STALE','FRESH'),'BAD_ROW_THRESHOLD',CURRENT_TIMESTAMP() FROM RAW.DIESEL_WEEKLY;
+  RETURN 'BLOCKED: bad-row threshold';
+ END IF;
+ CREATE OR REPLACE TEMP TABLE ACCEPTED AS SELECT DISTINCT geo_id,week_date,price::NUMBER(12,3) price FROM CLASSIFIED WHERE reason IS NULL;
+ SELECT COUNT(*) INTO :ins FROM ACCEPTED a LEFT JOIN RAW.DIESEL_WEEKLY r USING(geo_id,week_date) WHERE r.geo_id IS NULL;
+ SELECT COUNT(*) INTO :upd FROM ACCEPTED a JOIN RAW.DIESEL_WEEKLY r USING(geo_id,week_date) WHERE a.price IS DISTINCT FROM r.price;
+ SELECT COUNT(*) INTO :norm FROM DELTA WHERE source_date<>week_date;
+ IF (bad>0) THEN status_text:='PASSED_WITH_QUARANTINE'; reason_text:='INVALID_CORRECTIONS_KEEP_LAST_ACCEPTED'; END IF;
+ BEGIN TRANSACTION;
+ INSERT INTO RAW.QUARANTINE SELECT :lid,geo_id,week_date,price,reason FROM CLASSIFIED WHERE reason IS NOT NULL;
+ INSERT INTO RAW.NORMALIZATIONS SELECT :lid,geo_id,source_date,week_date FROM DELTA WHERE source_date<>week_date;
+ MERGE INTO RAW.DIESEL_WEEKLY t USING ACCEPTED s ON t.geo_id=s.geo_id AND t.week_date=s.week_date
+ WHEN MATCHED AND t.price IS DISTINCT FROM s.price THEN UPDATE SET price=s.price,loaded_at=CURRENT_TIMESTAMP(),load_id=:lid
+ WHEN NOT MATCHED THEN INSERT VALUES(s.geo_id,s.week_date,s.price,CURRENT_TIMESTAMP(),:lid);
+ DELETE FROM RAW.SOURCE_SEEN WHERE (geo_id,week_date) IN(SELECT geo_id,week_date FROM CHANGED_KEYS);
+ INSERT INTO RAW.SOURCE_SEEN SELECT geo_id,week_date,fingerprint FROM DELTA;
+ INSERT INTO RAW.LOAD_LOG SELECT :lid,:status_text,:ins,:upd,:bad,:norm,COUNT(*),DATEDIFF('day',MAX(week_date),:asof),IFF(DATEDIFF('day',MAX(week_date),:asof)>:max_age,'STALE','FRESH'),:reason_text,CURRENT_TIMESTAMP() FROM RAW.DIESEL_WEEKLY;
+ COMMIT;
+ RETURN status_text;
+EXCEPTION WHEN OTHER THEN
+ ROLLBACK;
+ INSERT INTO RAW.LOAD_LOG VALUES(:lid,'BLOCKED',0,0,0,0,(SELECT COUNT(*) FROM RAW.DIESEL_WEEKLY),NULL,NULL,'SCHEMA_OR_EXECUTION_ERROR: '||:SQLERRM,CURRENT_TIMESTAMP());
+ RETURN 'BLOCKED: inspect RAW.LOAD_LOG';
+END;
+$$;
+-- Provisional cadence only. Replace after measuring provider lag in Phase 1.
+CREATE OR REPLACE TASK RAW.TASK_LOAD_DIESEL_WEEKLY WAREHOUSE=FUEL_WH
+ SCHEDULE='USING CRON 0 12 * * TUE UTC'
+ ALLOW_OVERLAPPING_EXECUTION=FALSE AS CALL RAW.LOAD_DIESEL_WEEKLY();
+ALTER TASK RAW.TASK_LOAD_DIESEL_WEEKLY SUSPEND;
+-- Review manual CALL and RAW.LOAD_LOG before explicitly resuming the task.
+-- Do not run simultaneous manual CALLs; task non-overlap does not lock manual sessions.
