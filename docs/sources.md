@@ -17,3 +17,7 @@ The original brief contains stronger assumptions about trial access and Marketpl
 ## Business-process evidence
 
 The [business-flow validation record](business_flow_validation.md) documents a September 24, 2026 public-source check of FMCSA roles, EIA surcharge guidance and C.H. Robinson contract-pricing commentary. It distinguishes sourced facts from scenario assumptions and lists the contract/invoice evidence still required. Public-source review does not validate a particular broker’s contracts.
+
+## Policy analytics scope revision, September 27, 2026
+
+See [the evidence register](research/fuel_policy_evidence.md) for Uber Freight (April/June 2026), FedEx Freight and EIA primary sources, claim boundaries and review date. General industry guidance does not turn illustrative numeric parameters into cited contract terms.

@@ -1,3 +1,5 @@
+> **Scope update, September 27, 2026:** The material below describes the original SYNTHETIC two-clock implementation. For the revised real-source track, use [the current brief](BUILD_BRIEF.md) and [Phase 3 policy specification](PHASE_3_MODEL_SPEC.md). These legacy rules, requirements and object names do not define the new model.
+
 # Business context
 
 **SYNTHETIC DRY RUN.** This is a simplified U.S. truckload brokerage scenario, not a description of every broker or third-party logistics provider. See the [business-flow validation record](business_flow_validation.md) for sources and remaining evidence gaps.

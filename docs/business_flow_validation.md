@@ -1,3 +1,5 @@
+> **Current decision, September 27, 2026:** The project now focuses on policy calculations and comparisons. The [new evidence register](research/fuel_policy_evidence.md) records additional primary sources and limits. The weekly-carrier/monthly-or-quarterly-shipper pairing remains unvalidated. The revised [brief](BUILD_BRIEF.md) and [Phase 3 specification](PHASE_3_MODEL_SPEC.md) supersede the earlier model for the real-source build; the review below is preserved as history.
+
 # How the business flow has been validated
 
 Status: public-source review completed September 24, 2026 (America/New_York). No brokerage interviews, actual contracts, invoices or shipment records have been examined. All project results remain SYNTHETIC.

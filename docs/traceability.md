@@ -1,3 +1,5 @@
+> **Scope update, September 27, 2026:** The material below describes the original SYNTHETIC two-clock implementation. For the revised real-source track, use [the current brief](BUILD_BRIEF.md) and [Phase 3 policy specification](PHASE_3_MODEL_SPEC.md). These legacy rules, requirements and object names do not define the new model.
+
 # Traceability and test status
 
 PASS below refers to the local synthetic run. UNVERIFIED means no Snowflake execution. A named check is not a claim that the production gate passed.

@@ -12,3 +12,7 @@
 | phase-6 | Final README, LICENSE, pinned dependencies, build/check scripts, acceptance and industry-readiness docs, learnings, teardown, outputs/phase_6 |
 
 These PRs are a stacked review sequence. Later phases depend on earlier phases. The final runnable snapshot is phase-6; intermediate branches are review checkpoints, not promised standalone releases. Phase reports were finalized from the executed full dry run. No merge or release tag is automatic.
+
+## Current real-source continuation
+
+GitHub phase-11 contains the revised brief, evidence register, Phase 3 specification, navigation/status updates and read-only preflight. It is a design change batch, not Snowflake Phase 11. The real execution next step remains Phase 3. The branch numbering above records the original synthetic build.
