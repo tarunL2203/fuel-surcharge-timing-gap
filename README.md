@@ -1,6 +1,8 @@
-# The Broker’s Two Clocks
+# Fuel Surcharge Policy and Exposure Analytics
 
-**PIPELINE ENGINEERING PROJECT • Synthetic end-to-end tests complete • Real-source profiling complete • Historical load and unchanged rerun recorded • Snowflake modeling pending**
+**PIPELINE ENGINEERING PROJECT • Historical loading recorded • Revised Phase 3 design ready • Revised model implementation pending**
+
+Current direction: compare explicit surcharge policies and explain every calculation. Read the [revised brief](docs/BUILD_BRIEF.md), [Phase 3 specification](docs/PHASE_3_MODEL_SPEC.md), [source evidence](docs/research/fuel_policy_evidence.md) and [next Snowflake steps](docs/SNOWFLAKE_NEXT_STEPS.md). The existing local app and published charts remain the original SYNTHETIC two-clock demonstration.
 
 Latest execution evidence: [Phase 2 real Snowflake loading checkpoint](outputs/phase_2/REAL_SNOWFLAKE_REPORT.md). The uploaded rerun log shows zero inserts/updates and 16,275 retained rows; the duplicate check is empty. Broader loader failure-path tests and automatic operation remain pending.
 
@@ -19,27 +21,23 @@ Build a dependable path from an external price series to explainable comparisons
 | Adapt the source without coupling every model to its schema | A standardized adapter was profiled; the first historical load was owner-confirmed and the rerun log retains 16,275 rows |
 | Rerun loads and handle corrected prices safely | Change detection, merge logic and load logs are implemented and tested locally; uploaded Snowflake evidence records an unchanged rerun with zero inserts/updates; correction tests in Snowflake remain pending |
 | Separate rejected data from accepted history | Quarantine, batch blocking and preservation of accepted values are tested on planted errors |
-| Translate weekly prices into different reset schedules | Shared SQL models weekly, monthly and quarterly scenarios with missing-date rules and a zero-spread control |
+| Translate prices into explainable policy calculations | Revised specification defines policy versions, explicit index dates and exclusions; the existing shared SQL still implements the old synthetic scenarios |
 | Explain and reproduce every result | Detailed rows, reconciled summaries, explicit assumptions and a repeatable synthetic run support review |
 | Make stale data visible | Freshness is a separate quality signal; historical usability must not imply a live feed |
 
 Ready to explore as a documented sample. Not a production tool or a completed commercial validation. See [current publication status](docs/publication_status.md) for open work. The historical first-person entries in docs/LEARNINGS.md were agent-generated and have not been confirmed as the owner’s personal experience.
 
-Freight brokers can pay a weekly carrier fuel surcharge while collecting a monthly or quarterly shipper surcharge. This project isolates that timing gap, validates it against known answers and prepares a Snowflake deployment track.
+## Why this problem interests me
 
-## Why I chose this problem
+I want to turn external price data and changing commercial rules into calculations a pricing or finance team can inspect and repeat. The difficult work is selecting the right dated observation, applying the right policy version, handling incomplete history and showing why two rules produce different charges.
 
-I am interested in how a small difference in contract timing can affect a business decision. A diesel-price chart shows how prices moved; a brokerage owner needs to understand what those movements mean for the charges agreed with customers and carriers.
+The proposed initial audience is mid-market shipper pricing and finance teams. Broker comparisons are a second use case when separate customer and carrier terms are available. [Public industry evidence](docs/research/fuel_policy_evidence.md) supports index-based rules and invoice review as practical concerns; the audience remains a hypothesis to validate with practitioners.
 
-My aim is to explore a practical tool for a small freight brokerage: make the fuel-surcharge difference visible, compare alternative reset schedules, and show when the underlying data is too incomplete or stale to trust. Building the pipeline matters because these questions recur whenever prices or contract terms change. The calculations need to be repeatable and explainable.
-
-The current sample demonstrates that approach with artificial data. A useful business version would need the owner's actual terms and shipment records, reconciled to invoices. Its intended benefit is a clearer contract-review decision; financial savings have not been established.
-
-For the distinction between industry practice and modeled assumptions, read [business-flow validation](docs/business_flow_validation.md). The weekly carrier and monthly/quarterly shipper pairing is a scenario, not a verified description of typical broker contracts.
+The revised model will compare a weekly baseline, additional index lag and monthly resets. All initial numerical policies remain illustrative. “The Broker's Two Clocks” is retained as a historical scenario, not a claim about standard brokerage contracts. Quarterly resets and seasonal clauses are optional stress tests in the old sample. Modeled surcharge differences are not realized savings or total margin.
 
 Start with the [vision](docs/00_vision.md), [decision memo](docs/business_memo.md), [acceptance status](docs/acceptance_status.md) and [industry-readiness checklist](docs/industry_readiness.md).
 
-## Run the full sample
+## Run the original synthetic sample
 
 Python 3.11+ is recommended. Run from the repository root after cloning the `main` branch.
 
@@ -59,7 +57,7 @@ Windows activation: `.venv\Scripts\activate`. The pipeline itself completed in a
 
 The local database is excluded from git and rebuilt by the commands above. The parameters, plots and reports use seed 42 and `AS_OF_DATE=2026-09-23`. Audit load timestamps are actual run metadata and may differ across runs.
 
-## Architecture and files
+## Existing synthetic architecture and files
 
 ```mermaid
 flowchart TD
@@ -118,11 +116,11 @@ These are test results, not findings about EIA prices or company margins. The co
 3. Inspect the actual listing, grant the reviewed share access to FUEL_ANALYST, and configure one adapter object in CONFIG.SOURCE_CONFIG. Its columns must match the documented contract. Real names belong only in that configuration.
 4. `sql/01_profiling.sql`: record six answers; explicitly approve the source gate.
 5. `sql/02_landing.sql`: create procedure and a suspended task. Run a manual CALL, inspect logs, and review the provider-specific cadence before resuming.
-6. `sql/04_dynamic_tables.sql`, `sql/04b_quality_views.sql`, then `sql/05_validation.sql`: run the zero-spread control first.
-7. Upload `app/streamlit_app.py` to a Streamlit-in-Snowflake app in APP. Set its `MODE` to `snowflake` (or set FUEL_MODE); ensure MODEL views are accessible. Keep the synthetic banner until real results have been separately validated.
+6. **Revised Phase 3:** follow [SNOWFLAKE_NEXT_STEPS.md](docs/SNOWFLAKE_NEXT_STEPS.md). Only the read-only `sql/03a_policy_preflight.sql` is ready for the revised track. Do not run the old `04_dynamic_tables.sql`, `04b_quality_views.sql` or `05_validation.sql` as the new model; their replacement implementation is pending.
+7. Revised app integration follows policy-model validation. The existing app reads legacy objects and has not been migrated; do not deploy it as the revised policy explorer.
 8. Intentional teardown only: `sql/99_teardown.sql`. It deletes all dedicated project objects. It has not been executed in Snowflake.
 
-`python local/render_snowflake.py` regenerates the dynamic-table SQL. Round-trip translation tests support model equivalence but cannot certify Snowflake procedure behavior or permissions. See [dialect notes](local/dialect_notes.md).
+`python local/render_snowflake.py` regenerates only the legacy synthetic-model dynamic-table SQL. Round-trip translation tests support model equivalence but cannot certify Snowflake procedure behavior or permissions. See [dialect notes](local/dialect_notes.md).
 
 ## Review workflow
 
@@ -132,7 +130,7 @@ The repository is public. Changes reach main through pull requests, with phase c
 
 All schedule values are illustrative. The regions overlap. Observations are equally weighted, not actual load volumes. The centered seasonal measure uses future data and is descriptive. The sample preserves accepted history on invalid corrections and does not silently propagate provider deletions. Live freshness, contract rules, source terms, cost behavior and operational permissions require real deployment evidence.
 
-The sample build in this repository was generated with AI assistance on synthetic data to test the method end to end. The problem framing, business rules, and validation design are the author's. Findings will come from the real run in Snowflake.
+The sample build in this repository was generated with AI assistance on synthetic data to test the method end to end. The problem framing, business rules, and validation design are the author's. The real-price run will produce historical scenario findings, not verified commercial outcomes.
 
 ## Author and license
 

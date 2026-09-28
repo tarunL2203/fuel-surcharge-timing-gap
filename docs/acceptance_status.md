@@ -1,3 +1,5 @@
+> **Phase 3 update:** The [policy-model specification](PHASE_3_MODEL_SPEC.md) is the current design; revised implementation and execution are pending. Preserve the [Phase 2 historical checkpoint](../outputs/phase_2/REAL_SNOWFLAKE_REPORT.md). Existing synthetic model acceptance does not certify the revised model. Follow [current Snowflake instructions](SNOWFLAKE_NEXT_STEPS.md).
+
 # Acceptance status
 
 The local synthetic method has been executed. Owner-run real-source inspection and adapter validation in Snowflake are complete as of September 27, 2026. The inspected data ends June 22, 2026; published analytical results remain synthetic. See [dataset availability and evidence](dataset_availability.md). This is a reviewable engineering project, not a production-certified implementation.

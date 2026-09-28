@@ -1,3 +1,5 @@
+> **Latest checkpoint, September 27, 2026:** Historical loading and an unchanged rerun are recorded in the [real Phase 2 report](../outputs/phase_2/REAL_SNOWFLAKE_REPORT.md). The project has adopted [policy analytics](BUILD_BRIEF.md); its revised Phase 3 specification is ready, but replacement SQL, tests and app integration are pending. Statements below about landing still being pending are superseded by that execution report. Existing charts/app remain the legacy SYNTHETIC preview.
+
 # Public preview status
 
 Updated September 27, 2026. Scope: a reproducible SYNTHETIC pipeline demonstration plus completed owner-run real-source profiling in Snowflake. The inspected real data ends June 22, 2026; the reason for that stale tail remains unresolved. Published analytical outputs are still synthetic, and real landing/model/app execution is pending. This is not the final v0.1 release or a live small-business tool.

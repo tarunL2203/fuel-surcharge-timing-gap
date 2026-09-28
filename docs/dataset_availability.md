@@ -1,3 +1,5 @@
+> **Phase 3 update:** The [policy-model specification](PHASE_3_MODEL_SPEC.md) is the current design; revised implementation and execution are pending. Preserve the [Phase 2 historical checkpoint](../outputs/phase_2/REAL_SNOWFLAKE_REPORT.md). Existing synthetic model acceptance does not certify the revised model. Follow [current Snowflake instructions](SNOWFLAKE_NEXT_STEPS.md).
+
 # Dataset availability and engineering scope
 
 Status reviewed September 27, 2026. This project has two evidence tracks: an executed synthetic end-to-end demonstration and owner-run real-source profiling in Snowflake. Published model outputs, charts and the decision memo still belong to the synthetic track.

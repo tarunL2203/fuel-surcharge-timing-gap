@@ -1,0 +1,37 @@
+-- UNVERIFIED: confirm in Snowflake. Read-only preflight for revised Phase 3.
+-- No DDL, DML, loader CALL or task RESUME. Run each result query separately.
+USE ROLE FUEL_ANALYST;
+USE WAREHOUSE FUEL_WH;
+USE DATABASE FUEL_TIMING;
+USE SCHEMA MODEL;
+
+-- 1. Overall accepted coverage (checkpoint: 16275 rows, 10 geographies).
+SELECT COUNT(*) AS RAW_ROWS, COUNT(DISTINCT GEO_ID) AS GEOGRAPHIES,
+       MIN(WEEK_DATE) AS FIRST_WEEK, MAX(WEEK_DATE) AS LAST_WEEK,
+       MIN(PRICE) AS MIN_PRICE, MAX(PRICE) AS MAX_PRICE
+FROM FUEL_TIMING.RAW.DIESEL_WEEKLY;
+
+-- 2. Each geography has its own coverage; do not assume one global start date.
+SELECT GEO_ID, COUNT(*) AS RAW_ROWS, MIN(WEEK_DATE) AS FIRST_WEEK,
+       MAX(WEEK_DATE) AS LAST_WEEK
+FROM FUEL_TIMING.RAW.DIESEL_WEEKLY
+GROUP BY GEO_ID ORDER BY GEO_ID;
+
+-- 3. Zero rows is the expected passing result for this exception query.
+SELECT GEO_ID, WEEK_DATE, COUNT(*) AS ROW_COUNT
+FROM FUEL_TIMING.RAW.DIESEL_WEEKLY
+GROUP BY GEO_ID, WEEK_DATE HAVING COUNT(*) > 1;
+
+-- 4. Summary only; does not run the loader or expose the source object name.
+SELECT STATUS, INSERTED, UPDATED, QUARANTINED, RAW_ROWS, FRESHNESS, REASON
+FROM FUEL_TIMING.RAW.LOAD_LOG ORDER BY LOADED_AT DESC LIMIT 1;
+
+-- 5. Inspect run date and approved quality settings; do not change them here.
+SELECT AS_OF_DATE FROM FUEL_TIMING.CONFIG.RUN_CONFIG;
+SELECT PARAM_NAME, PARAM_VALUE, UNIT
+FROM FUEL_TIMING.CONFIG.MODEL_PARAMETERS
+WHERE PARAM_NAME IN ('MIN_PRICE', 'MAX_PRICE', 'FRESHNESS_MAX_DAYS')
+ORDER BY PARAM_NAME;
+
+-- 6. Expected task state SUSPENDED; inspect locally, do not publish account metadata.
+SHOW TASKS LIKE 'TASK_LOAD_DIESEL_WEEKLY' IN SCHEMA FUEL_TIMING.RAW;
