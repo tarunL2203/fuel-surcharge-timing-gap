@@ -1,6 +1,8 @@
 # The broker's two clocks
 
-**SYNTHETIC DRY RUN. Real contract behavior and Snowflake execution remain unverified.**
+**Engineering focus: reliable ingestion and explainable timing calculations.**
+
+The inspected real source contains 16,275 weekly price observations across 10 geographies and ends on June 22, 2026, as reviewed on September 27. It supports historical analysis; current-feed availability is unresolved. Contracts, invoices and shipment volumes are unavailable, so this project cannot establish actual brokerage margins. The published analytical results remain SYNTHETIC. [Dataset availability and evidence](dataset_availability.md) separates observed coverage from pending deployment and business validation.
 
 A freight broker arranges transport between a shipper with goods to move and a carrier that moves them. This project asks what happens to the fuel-surcharge component when the broker's customer charges and carrier charges follow different update schedules.
 
@@ -11,6 +13,12 @@ I want to connect data analysis to a decision a small business owner can recogni
 What interests me is the combination of business reasoning and reliable execution. A chart can reveal a pattern, but an owner also needs to know which contract assumptions produced it, whether the input data is complete, and whether the calculation will still work when another week of data arrives. This project brings those questions together in a repeatable process.
 
 The intended user is a small freight brokerage owner or pricing manager whose agreements identify a fuel component. It is a proposed decision-support use case, not evidence that every small brokerage has this problem or wants this product. The model does not yet establish usefulness for a business that buys and sells transport at a single price including fuel.
+
+## Where the engineering complexity sits
+
+The design combines a real-source adapter with a deterministic synthetic test environment. Artificial errors and known answers let us exercise failure paths before trusting the real feed. Shared SQL connects both tracks, while Snowflake execution is validated separately.
+
+The creative part is turning a simple timing question into a system that can explain its own results: which source rows were accepted, which corrections changed history, which reset price applied, and which assumptions produced each summary. Dataset size alone does not require Snowflake; this project uses it to practice managed execution, access control, refresh behavior and an app close to the data. Those operational benefits remain to be verified in this deployment.
 
 ## The challenges I am addressing
 
@@ -53,7 +61,7 @@ A real application needs actual contract terms, shipment dates and miles, invoic
 
 ## Why include Snowflake?
 
-The intended deployment explores managed data processing, repeatable checks and an app alongside the data. The current demonstration runs locally. Marketplace availability, access, refresh behavior, costs and Snowflake execution must be verified before describing those as delivered capabilities.
+The intended deployment explores managed data processing, repeatable checks and an app alongside the data. The full synthetic demonstration runs locally. Real-source access and adapter profiling have now been exercised by the owner in Snowflake; landing, refresh behavior, scheduling, operating costs and app deployment still require execution evidence.
 
 ## What if only national diesel prices are available?
 

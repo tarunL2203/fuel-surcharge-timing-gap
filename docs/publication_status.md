@@ -1,6 +1,8 @@
 # Public preview status
 
-Prepared September 25, 2026. Scope: a reproducible SYNTHETIC demonstration for readers and technical reviewers. This is not the final v0.1 release or a live small-business tool.
+Updated September 27, 2026. Scope: a reproducible SYNTHETIC pipeline demonstration plus completed owner-run real-source profiling in Snowflake. The inspected real data ends June 22, 2026; the reason for that stale tail remains unresolved. Published analytical outputs are still synthetic, and real landing/model/app execution is pending. This is not the final v0.1 release or a live small-business tool.
+
+The project demonstrates source adaptation, repeatable loading, explicit quality controls and traceable schedule calculations. The engineering work remains useful with historical data; claims about current operations or business savings require additional evidence. See [dataset availability](dataset_availability.md).
 
 ## What visitors can use
 
@@ -31,6 +33,6 @@ Track these items in [GitHub issue #11](https://github.com/tarunL2203/fuel-surch
 - Resolve Snowflake idempotency validation and execute the deployment, permissions, refresh, scheduling and teardown checks.
 - Replace historical agent-written learnings with the owner's own words.
 - Validate actual paired contracts and shipment invoices with an operator; no financial benefit is proven.
-- Confirm source access, terms, live freshness, operating costs and responsibility for exceptions.
+- Retain the completed profiling evidence and resolve source terms, live freshness, ongoing access, operating costs and responsibility for exceptions.
 
 Public sharing is for feedback on a work-in-progress sample. No production certification, savings claim or final release tag is implied.
