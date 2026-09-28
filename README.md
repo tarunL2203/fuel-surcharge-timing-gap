@@ -1,6 +1,25 @@
 # The Broker’s Two Clocks
 
-**PUBLIC SYNTHETIC PREVIEW • Local demonstration • Snowflake execution unverified**
+**PIPELINE ENGINEERING PROJECT • Synthetic end-to-end tests complete • Real-source profiling complete • Snowflake loading and modeling pending**
+
+## Dataset availability comes first
+
+The real source profiled in Snowflake on September 27, 2026 contains **16,275 weekly diesel-price observations across 10 geographies**, with overall coverage from **March 21, 1994 through June 22, 2026**. Regional starting dates differ. These are the observations available in the inspected adapter output, not a claim about the latest data available from EIA elsewhere. The cause of the source's stale tail remains unresolved.
+
+This supports historical scenario analysis. It does not supply shipper/carrier contracts, shipment volumes, invoices or actual brokerage margins. Published charts, app examples and business conclusions in this repository still use **SYNTHETIC** data; real-source profiling does not validate those conclusions on real prices. See [dataset availability and evidence](docs/dataset_availability.md).
+
+## The engineering problem
+
+Build a dependable path from an external price series to explainable comparisons of two surcharge schedules. The dataset is small; the challenge is making that path correct when source formats differ, observations change, a batch contains bad data, or the feed stops updating.
+
+| Engineering challenge | Approach and evidence boundary |
+|---|---|
+| Adapt the source without coupling every model to its schema | A standardized adapter was profiled in Snowflake; loading it is next |
+| Rerun loads and handle corrected prices safely | Change detection, merge logic and load logs are implemented and tested locally; Snowflake rerun proof is pending |
+| Separate rejected data from accepted history | Quarantine, batch blocking and preservation of accepted values are tested on planted errors |
+| Translate weekly prices into different reset schedules | Shared SQL models weekly, monthly and quarterly scenarios with missing-date rules and a zero-spread control |
+| Explain and reproduce every result | Detailed rows, reconciled summaries, explicit assumptions and a repeatable synthetic run support review |
+| Make stale data visible | Freshness is a separate quality signal; historical usability must not imply a live feed |
 
 Ready to explore as a documented sample. Not a production tool or a completed commercial validation. See [current publication status](docs/publication_status.md) for open work. The historical first-person entries in docs/LEARNINGS.md were agent-generated and have not been confirmed as the owner’s personal experience.
 
@@ -90,7 +109,7 @@ These are test results, not findings about EIA prices or company margins. The co
 
 ## Snowflake deployment order
 
-**UNVERIFIED.** First read [the real-source gate](docs/real_source_gate.md). No Snowflake connection, Marketplace grant or deployment occurred in this build.
+**PARTIAL EXECUTION.** The owner completed real-source inspection and adapter validation in Snowflake. The September 27 summary is documented in [dataset availability](docs/dataset_availability.md). Landing, model refresh, scheduling and app execution remain unverified in Snowflake. Read [the real-source gate](docs/real_source_gate.md) before proceeding; provider lag and scheduling readiness remain open.
 
 1. `sql/00_setup.sql`: administrative setup, small warehouse and resource monitor.
 2. `sql/03_seeds.sql`: configuration must exist before profiling or landing. This dependency order corrects the brief’s numeric ordering.
