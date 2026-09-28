@@ -1,6 +1,8 @@
 # The Broker’s Two Clocks
 
-**PIPELINE ENGINEERING PROJECT • Synthetic end-to-end tests complete • Real-source profiling complete • Snowflake loading and modeling pending**
+**PIPELINE ENGINEERING PROJECT • Synthetic end-to-end tests complete • Real-source profiling complete • Historical load and unchanged rerun recorded • Snowflake modeling pending**
+
+Latest execution evidence: [Phase 2 real Snowflake loading checkpoint](outputs/phase_2/REAL_SNOWFLAKE_REPORT.md). The uploaded rerun log shows zero inserts/updates and 16,275 retained rows; the duplicate check is empty. Broader loader failure-path tests and automatic operation remain pending.
 
 ## Dataset availability comes first
 
@@ -14,8 +16,8 @@ Build a dependable path from an external price series to explainable comparisons
 
 | Engineering challenge | Approach and evidence boundary |
 |---|---|
-| Adapt the source without coupling every model to its schema | A standardized adapter was profiled in Snowflake; loading it is next |
-| Rerun loads and handle corrected prices safely | Change detection, merge logic and load logs are implemented and tested locally; Snowflake rerun proof is pending |
+| Adapt the source without coupling every model to its schema | A standardized adapter was profiled; the first historical load was owner-confirmed and the rerun log retains 16,275 rows |
+| Rerun loads and handle corrected prices safely | Change detection, merge logic and load logs are implemented and tested locally; uploaded Snowflake evidence records an unchanged rerun with zero inserts/updates; correction tests in Snowflake remain pending |
 | Separate rejected data from accepted history | Quarantine, batch blocking and preservation of accepted values are tested on planted errors |
 | Translate weekly prices into different reset schedules | Shared SQL models weekly, monthly and quarterly scenarios with missing-date rules and a zero-spread control |
 | Explain and reproduce every result | Detailed rows, reconciled summaries, explicit assumptions and a repeatable synthetic run support review |
@@ -109,7 +111,7 @@ These are test results, not findings about EIA prices or company margins. The co
 
 ## Snowflake deployment order
 
-**PARTIAL EXECUTION.** The owner completed real-source inspection and adapter validation in Snowflake. The September 27 summary is documented in [dataset availability](docs/dataset_availability.md). Landing, model refresh, scheduling and app execution remain unverified in Snowflake. Read [the real-source gate](docs/real_source_gate.md) before proceeding; provider lag and scheduling readiness remain open.
+**PARTIAL EXECUTION.** The owner completed real-source inspection and adapter validation in Snowflake. The September 27 summary is documented in [dataset availability](docs/dataset_availability.md). The first historical load is owner-confirmed and unchanged-rerun/duplicate exports are recorded in the Phase 2 report. Broader landing failure paths, model refresh, scheduling and app execution remain unverified in Snowflake. Read [the real-source gate](docs/real_source_gate.md) before proceeding; provider lag and scheduling readiness remain open.
 
 1. `sql/00_setup.sql`: administrative setup, small warehouse and resource monitor.
 2. `sql/03_seeds.sql`: configuration must exist before profiling or landing. This dependency order corrects the brief’s numeric ordering.
